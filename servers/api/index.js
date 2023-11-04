@@ -18,9 +18,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/types', async (req, res) => {
-    const categories = await client.execute("SELECT distinct type FROM signs");
-    const types = categories.rows.map((row) => row.type);
-    res.json(types);
+    const categories = await client.execute("SELECT * FROM types");
+    // const types = categories.rows.map((row) => row.type);
+    res.json(categories.rows);
 });
 
 app.listen(3000, () => {
