@@ -21,3 +21,4 @@ clinet/*.sw?
 
 
 servers/api/node_modules
+servers/api/.env

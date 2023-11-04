@@ -1,5 +1,16 @@
-const express = require('express');
+// const express = require('express');
+import express from "express";
+import { createClient } from "@libsql/client";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const app = express();
+
+const client = createClient({
+    url: process.env.DATABASE_URL,
+    authToken: process.env.TOKEN
+});
 
 app.get('/', (req, res) => {
   res.send('Hello World');
