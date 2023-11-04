@@ -4,7 +4,7 @@ import LearnPage from "./pages/LearnPage";
 import LearnHome from "./pages/LearnHome";
 import TestHome from "./pages/TestHome";
 import TestPage from "./pages/TestPage";
-
+import Learn from "./pages/Learn";
 function App() {
   return (
     <div>
