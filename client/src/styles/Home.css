@@ -1,0 +1,49 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 50px;
+    text-align: center;
+  }
+  
+  .home-container h1 {
+    font-size: 2.5rem;
+    color: #333;
+  }
+  
+  .home-container p {
+    font-size: 1.2rem;
+    color: #555;
+    margin: 10px 0;
+  }
+  
+  .category-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .category-item {
+    margin: 0 10px;
+  }
+  
+  .category-item button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+  
+  .category-item button:hover {
+    background-color: #45a049;
+  }
+  
+  .home-container p:last-child {
+    margin-top: 30px;
+    font-style: italic;
+  }
+  
