@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useHistory } from "react-router-dom";
 
 const api = "http://localhost:3000";
 
 const LearnHome = () => {
   const { type } = useParams();
   const [words, setWords] = useState([]);
-
+  const history = useHistory();
   useEffect(() => {
     fetch(`${api}/signs/${type}`)
       .then((res) => res.json())
@@ -16,9 +16,14 @@ const LearnHome = () => {
       });
   }, [type]);
 
+  const handleClick = (word) => {
+    console.log("Selected word:", word);
+    history.push(`/learn/${type}/${word.name}`);
+  };
+
   const wordList = words.map((word) => {
     return (
-      <div key={word.id}>
+      <div key={word.id} onClick={() => handleClick(word)}>
         <p>{word.name}</p>
         {/* <img
           src={word.image_url}
