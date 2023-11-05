@@ -40,11 +40,14 @@ function TestQuestion(props) {
           .post(`${SERVER_URL}/video?name=${name}&id=${id}`, formData)
           .then((response) => {
             setTestResult(response.data.percentage);
-            console.log(response.data.labels)
+            mainSetTestResults((prevTestResults) => {
+              prevTestResults[name] = response.data.percentage;
+              return prevTestResults;
+            });
             console.log(response.data.percentage)
           })
           .catch((error) => {
-            setError("Error sending the video to the server. Please try again.");
+            setError("Error sending the video to the server. Please try again."+error);
           });
       };
 
@@ -53,12 +56,9 @@ function TestQuestion(props) {
       setTimeout(() => {
         mediaRecorder.stop();
         setIsRecording(false);
-        // mainSetTestResults((prevTestResults) => {
-        //   const newTestResults = [...prevTestResults];
-        //   newTestResults[id] = testResult;
-        //   return newTestResults;
-        // }
         setThisLevelCompleted(true);
+        
+        
       }, 5000);
     } else {
       setError("Webcam not available.");
