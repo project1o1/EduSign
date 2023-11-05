@@ -25,3 +25,4 @@ servers/api/.env
 
 
 servers/model/__pycache__
+servers/model/utils/__pycache__

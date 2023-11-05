@@ -23,13 +23,33 @@ app.get('/types', async (req, res) => {
     res.json(categories.rows);
 });
 
-app.get('/progress',async (req, res) => {
+app.get('/progress', async (req, res) => {
     //get params
     // params: { username: "pavanmanishd", type: category.type },
     const { username, type } = req.query;
     const progress = await client.execute({
         sql: "SELECT * FROM learn_progress WHERE username = ? AND type = ? AND completed = 1",
         args: [username, type],
+    });
+    //check the rows and only send the rows with distinct names
+    const names = [];
+    const rows = [];
+    progress.rows.forEach((row) => {
+        if (!names.includes(row.name)) {
+            names.push(row.name);
+            rows.push(row);
+        }
+    });
+    res.json(rows);
+}
+);
+
+app.get('/update_progress', async (req, res) => {
+    const { username, type, name } = req.query;
+    const UpperType = type.charAt(0).toUpperCase() + type.slice(1);
+    var progress = await client.execute({
+        sql: "INSERT INTO learn_progress(username,type,name,completed) VALUES(?,?,?,1)",
+        args: [username, UpperType, name],
     });
     res.json(progress.rows);
 }

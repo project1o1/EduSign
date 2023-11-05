@@ -5,6 +5,7 @@ import axios from "axios";
 import "../styles/LearnPage.css";
 
 const SERVER_URL = "http://localhost:8000";
+const api = "http://localhost:3000";
 
 const LearnPage = () => {
   const { type, id } = useParams();
@@ -84,7 +85,10 @@ const LearnPage = () => {
   };
 
   const nextLessonButton = percentage >= 80 && (
-    <button onClick={() => history.push(`/learn/${type}`)} className="next-lesson-button">
+    <button
+      onClick={() => history.push(`/learn/${type}`)}
+      className="next-lesson-button"
+    >
       Next Lesson
     </button>
   );
@@ -93,6 +97,22 @@ const LearnPage = () => {
     if (percentage !== null) {
       if (percentage < 80) {
         return "Relearn";
+      } else {
+        // return "Start";
+        console.log(id, type);
+        axios.get(`${api}/update_progress`, {
+            params: {
+              username: "pavanmanishd",
+              type: type,
+              name: id,
+            },
+          })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     }
     return "Start";
@@ -107,15 +127,22 @@ const LearnPage = () => {
       </div>
       <div className="instruction-container">
         <p className="instruction-text">
-          Please position yourself properly in front of the webcam and mimic the sign corresponding to the displayed word. Click the "Start" button to capture and send the frames to the server for validation.
+          Please position yourself properly in front of the webcam and mimic the
+          sign corresponding to the displayed word. Click the "Start" button to
+          capture and send the frames to the server for validation.
         </p>
         <p className="instruction-text">
-          Make sure the sign is clear and well-captured to ensure accurate validation results.
+          Make sure the sign is clear and well-captured to ensure accurate
+          validation results.
         </p>
       </div>
       <div className="content-container">
         <div className="image-container">
-          <img src="https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg" alt="Placeholder" className="placeholder-image" />
+          <img
+            src="https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            alt="Placeholder"
+            className="placeholder-image"
+          />
         </div>
         <div className="webcam-container">
           <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
@@ -126,7 +153,11 @@ const LearnPage = () => {
       {isSending && <p>{counter}</p>}
       {percentage !== null && <p>Percentage: {percentage}</p>}
       <div className="button-container">
-        <button onClick={captureVideo} disabled={isSending || isProcessing} className="capture-button">
+        <button
+          onClick={captureVideo}
+          disabled={isSending || isProcessing}
+          className="capture-button"
+        >
           {isSending ? "Sending..." : startOrRelearnButton()}
         </button>
         {nextLessonButton}
