@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useParams,useHistory } from "react-router-dom";
-
+import { useParams, useHistory } from "react-router-dom";
+import axios from "axios";
 const api = "http://localhost:3000";
 
 const LearnHome = () => {
   const { type } = useParams();
   const [words, setWords] = useState([]);
+  const [completedStatus, setCompletedStatus] = useState({});
+
   const history = useHistory();
   useEffect(() => {
     fetch(`${api}/signs/${type}`)
@@ -16,6 +18,29 @@ const LearnHome = () => {
       });
   }, [type]);
 
+  useEffect(() => {
+    const updateCompletedStatus = async () => {
+      const statusMap = {};
+      for (const word of words) {
+        try {
+          const response = await axios.get(`${api}/completed`, {
+            params: {
+              username: "pavanmanishd",
+              type: type,
+              name: word.name,
+            },
+          });
+          statusMap[word.name] = response.data.completed;
+        } catch (error) {
+          console.log(error);
+          statusMap[word.name] = false;
+        }
+      }
+      setCompletedStatus(statusMap);
+    };
+    updateCompletedStatus();
+  }, [words, type]);
+
   const handleClick = (word) => {
     console.log("Selected word:", word);
     history.push(`/learn/${type}/${word.name}`);
@@ -25,20 +50,46 @@ const LearnHome = () => {
     return (
       <div key={word.id} onClick={() => handleClick(word)}>
         <p>{word.name}</p>
-        {/* <img
-          src={word.image_url}
-          alt={word.name}
-          width={"100px"}
-          height={"100px"}
-        /> */}
+        {completedStatus[word.name] ? <p>Completed</p> : <p>Incomplete</p>}
       </div>
     );
   });
+
+  const completedCount = Object.values(completedStatus).filter(
+    (status) => status
+  ).length;
+  const totalCount = Object.values(completedStatus).length;
+  const progress = (
+    <div>
+      <h2>Progress</h2>
+      <p>
+        {completedCount} / {totalCount}
+      </p>
+      <div
+        style={{
+          border: "1px solid #ccc",
+          width: "100%",
+          backgroundColor: "#f3f3f3",
+          borderRadius: "5px",
+        }}
+      >
+        <div
+          style={{
+            height: "20px",
+            width: `${(completedCount / totalCount) * 100}%`,
+            backgroundColor: "#4caf50",
+            borderRadius: "5px",
+          }}
+        ></div>
+      </div>
+    </div>
+  );
 
   return (
     <div>
       <h1>Learn</h1>
       <h2>{type}</h2>
+      {progress}
       {wordList}
     </div>
   );

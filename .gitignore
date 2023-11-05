@@ -22,3 +22,6 @@ client/*.sw?
 
 servers/api/node_modules
 servers/api/.env
+
+
+servers/model/__pycache__

@@ -35,6 +35,26 @@ app.get('/progress',async (req, res) => {
 }
 );
 
+app.get('/completed', async (req, res) => {
+    //get params
+    // params: { username: "pavanmanishd", type: category.type,name: name },
+    const { username, type, name } = req.query;
+    const UpperType = type.charAt(0).toUpperCase() + type.slice(1);
+    const progress = await client.execute({
+        sql: "SELECT * FROM learn_progress WHERE username = ? AND type = ? AND name = ?",
+        args: [username, UpperType, name],
+    });
+    let completed = false;
+    progress.rows.forEach((row) => {
+        if (row.completed === 1) {
+            completed = true;
+            return;
+        }
+    });
+    res.json({ completed });
+}
+);
+
 app.get('/signs/:type', async (req, res) => {
     const { type } = req.params;
     //upper case first letter

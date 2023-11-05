@@ -60,7 +60,8 @@ def upload_video():
         matching_labels = [label for label in labels if label == type_label]
         percentage = (len(matching_labels) / len(labels)) * 100
 
-        return jsonify({"labels": labels, "percentage": percentage})
+        # return jsonify({"labels": labels, "percentage": percentage})
+        return jsonify({"percentage":percentage})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
