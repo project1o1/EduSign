@@ -22,6 +22,19 @@ function Test(props) {
         console.log(data);
       });
   }, []);
+
+  function saveTestResults() {
+    fetch(api + "/testresults", {
+      method: "POST",
+      body: JSON.stringify(testResults),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .catch((err) => console.log(err));
+  }
+
   const renderTestQuestions = () => {
     var testQuestions = [];
     for (var i = 0; i < testData.length; i++) {
