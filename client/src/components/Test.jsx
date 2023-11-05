@@ -6,7 +6,7 @@ const api = "http://localhost:3000";
 function Test(props) {
   const [testData, setTestData] = useState([]);
   const [isVisibles, setIsVisibles] = useState([true, false]);
-  const [testResults, setTestResults] = useState([]);
+  const [testResults, setTestResults] = useState({});
 
   useEffect(() => {
     fetch(api + "/signs/" + props.type)

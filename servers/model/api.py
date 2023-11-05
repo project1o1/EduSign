@@ -38,14 +38,12 @@ def upload_frame():
 @app.route("/video", methods=["POST"])
 def upload_video():
     try:
-        temp_dir = tempfile.TemporaryDirectory()
-        temp_file_path = f"{temp_dir.name}/input_video.webm"
+        data = request.files["video"]
+        video_file = tempfile.NamedTemporaryFile(suffix=".webm", delete=False)
+        video_file.write(data.read())
+        video_file.close()
 
-        with open(temp_file_path, "wb") as video_file:
-            shutil.copyfileobj(request.files["file"], video_file)
-
-        video_capture = cv2.VideoCapture(temp_file_path)
-        frame_count = 0
+        video_capture = cv2.VideoCapture(video_file.name)
         labels = []
 
         while True:
@@ -54,14 +52,18 @@ def upload_video():
                 break
 
             label_name = pred.get_hand_gesture_label(frame)
-            labels.append(label_name)
-            frame_count += 1
+            if(label_name != ""):
+                labels.append(label_name)
+
+        type_label = request.args.get("name")
+        print(type_label)
+        matching_labels = [label for label in labels if label == type_label]
+        percentage = (len(matching_labels) / len(labels)) * 100
+
+        return jsonify({"labels": labels, "percentage": percentage})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-    print(labels)
-    return jsonify({"labels": json.dumps(labels)})
-
 if __name__ == "__main__":
     pred = Predict()
-    app.run(debug=True, host='192.168.0.106', port=8000)
+    app.run(debug=True, host='0.0.0.0', port=8000)
