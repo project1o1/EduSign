@@ -1,14 +1,12 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css'; // Import the CSS file for styling
-
 const Home = () => {
   const categories = ['Alphabets', 'Numbers', 'Common Phrases']; // Example categories
-  const history = useHistory();
-
+  const navigate = useNavigate();
   const handleCategorySelect = (category) => {
     // Redirect to the learn page with the selected category
-    history.push(`/learn/${category}`);
+    navigate(`/learn/${category}`);
     console.log('Selected category:', category);
   };
 

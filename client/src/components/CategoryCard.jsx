@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const api = "http://localhost:3000";
 const CategoryCard = ({ category }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   // Initialize completed progress to 0 by default
   const [completedProgress, setCompletedProgress] = useState(0);
   const totalProgress = category.count;
@@ -12,7 +12,7 @@ const CategoryCard = ({ category }) => {
   const handleClick = () => {
     // Redirect to the learn page with the selected category
     const type = category.type.toLowerCase();
-    history.push(`/learn/${type}`);
+    navigate(`/learn/${type}`);
     console.log("Selected category:", category);
   };
 

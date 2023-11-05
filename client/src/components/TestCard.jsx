@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'; 
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function TestCard(props) {
-    const history = useHistory();
+    const navigate = useNavigate();
     function handleClick() {
-        history.push("/test/"+props.title);
+        navigate("/test/"+props.title);
     }
   return (
     <div className="card" onClick={handleClick}>

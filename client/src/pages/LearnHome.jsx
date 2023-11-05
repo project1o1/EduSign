@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 const api = "http://localhost:3000";
 
@@ -8,7 +8,7 @@ const LearnHome = () => {
   const [words, setWords] = useState([]);
   const [completedStatus, setCompletedStatus] = useState({});
 
-  const history = useHistory();
+  const navigate = useNavigate();
   useEffect(() => {
     fetch(`${api}/signs/${type}`)
       .then((res) => res.json())
@@ -43,7 +43,7 @@ const LearnHome = () => {
 
   const handleClick = (word) => {
     console.log("Selected word:", word);
-    history.push(`/learn/${type}/${word.name}`);
+    navigate(`/learn/${type}/${word.name}`);
   };
 
   const wordList = words.map((word) => {

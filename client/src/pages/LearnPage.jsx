@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/LearnPage.css";
 
@@ -9,7 +9,7 @@ const api = "http://localhost:3000";
 
 const LearnPage = () => {
   const { type, id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const webcamRef = useRef(null);
   const [isSending, setIsSending] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -86,7 +86,7 @@ const LearnPage = () => {
 
   const nextLessonButton = percentage >= 80 && (
     <button
-      onClick={() => history.push(`/learn/${type}`)}
+      onClick={() => navigate(`/learn/${type}`)}
       className="next-lesson-button"
     >
       Next Lesson
