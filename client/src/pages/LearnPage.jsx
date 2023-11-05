@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
@@ -14,6 +14,23 @@ const LearnPage = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
   const [percentage, setPercentage] = useState(null);
+  const [counter, setCounter] = useState(5);
+
+  useEffect(() => {
+    let timer;
+    if (isSending) {
+      timer = setInterval(() => {
+        setCounter((prevCounter) => {
+          if (prevCounter === 1) {
+            clearInterval(timer);
+            return 0;
+          }
+          return prevCounter - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [isSending]);
 
   const captureVideo = () => {
     setIsSending(true);
@@ -106,6 +123,7 @@ const LearnPage = () => {
       </div>
       {error && <p className="error-message">{error}</p>}
       {isProcessing && <p>Processing...</p>}
+      {isSending && <p>{counter}</p>}
       {percentage !== null && <p>Percentage: {percentage}</p>}
       <div className="button-container">
         <button onClick={captureVideo} disabled={isSending || isProcessing} className="capture-button">
