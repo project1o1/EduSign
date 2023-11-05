@@ -22,16 +22,16 @@ def upload_frame():
     try:
         data = request.get_json()
         base64img = data["frameData"]
+        # type = data["type"]
+        # id = data["id"]
         base64img = base64img.replace("data:image/jpeg;base64,", "")
         binary_image_data = base64.b64decode(base64img)
         nparr = np.frombuffer(binary_image_data, np.uint8)
         image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         label_name = pred.get_hand_gesture_label(image)
         # print(label_name)
-        type = data["type"]
-        id = data["id"]
 
-        return jsonify({"message": "Frame received and processed successfully", "label": label_name, "type": type, "id": id})
+        return jsonify({"message": "Frame received and processed successfully", "label": label_name})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -64,4 +64,4 @@ def upload_video():
 
 if __name__ == "__main__":
     pred = Predict()
-    app.run(debug=True, host='192.168.0.105', port=8000)
+    app.run(debug=True, host='192.168.0.106', port=8000)
