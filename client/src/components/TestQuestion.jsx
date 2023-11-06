@@ -18,6 +18,7 @@ function TestQuestion(props) {
   const mainSetTestResults = props.setTestResults;
   const [thisLevelCompleted, setThisLevelCompleted] = useState(false);
   const [isResponseReceived, setIsResponseReceived] = useState(false);
+  const setIsTestCompleted = props.setIsTestCompleted;
 
   const startRecording = () => {
     if (webcamRef.current) {
@@ -69,7 +70,11 @@ function TestQuestion(props) {
       setIsVisibles((prevIsVisibles) => {
         const newIsVisibles = [...prevIsVisibles];
         newIsVisibles[id] = false;
+        if(newIsVisibles.length === id + 1) {
+          setIsTestCompleted(true);
+        } else {
         newIsVisibles[id + 1] = true;
+        }
         return newIsVisibles;
       });
     }
@@ -113,6 +118,7 @@ TestQuestion.propTypes = {
   id: PropTypes.number.isRequired,
   webcamRef: PropTypes.object.isRequired,
   setTestResults: PropTypes.func.isRequired,
+  setIsTestCompleted: PropTypes.func.isRequired,
 };
 
 export default TestQuestion;

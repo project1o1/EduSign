@@ -13,7 +13,7 @@ function ResultCard(props) {
                 return (
                 <div key={key}>
                     <span className="card-title">{key}</span><span>&nbsp;&nbsp;  - &nbsp;&nbsp; </span>
-                    <span className="card-text">{testResults[key]>=threshold_score?"Good":"Bad"}</span>
+                    <span className="card-text">{testResults[key]+"  "}{testResults[key]>=threshold_score?"Good":"Bad"}</span>
                 </div>
                 );
             })

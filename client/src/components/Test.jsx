@@ -17,6 +17,7 @@ function Test(props) {
   const setIsTestCompleted = props.setIsTestCompleted;
   const [username, setUsername] = useState("");
   const [type, setType] = useState(props.type);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   // const webcamRef = props.webcamRef;
 
   useEffect(() => {
@@ -46,6 +47,7 @@ function Test(props) {
       })
       .then((res) => {
         console.log(res);
+        setIsSubmitted(true);
         // setIsTestCompleted(true);
       })
       .catch((err) => console.log(err));
@@ -56,7 +58,7 @@ function Test(props) {
     for (var i = 0; i < testData.length; i++) {
       testQuestions.push(
         <TestQuestion
-          key = {uuidv4()}
+          key={uuidv4()}
           id={i}
           name={testData[i].name}
           isVisible={isVisibles[i]}
@@ -64,6 +66,7 @@ function Test(props) {
           setIsVisibles={setIsVisibles}
           webcamRef={props.webcamRef}
           setTestResults={setTestResults}
+          setIsTestCompleted={setIsTestCompleted}
         />
       );
     }
@@ -74,7 +77,9 @@ function Test(props) {
       {!isTestCompleted && (
         <div>
           {renderTestQuestions()}
-          <button
+        </div>
+      )}
+      {isTestCompleted && <button
             onClick={() => {
               // console.log(testResults)
               setIsTestCompleted(true);
@@ -82,10 +87,8 @@ function Test(props) {
             }}
           >
             Submit
-          </button>
-        </div>
-      )}
-      {isTestCompleted && (
+          </button>}
+      {isSubmitted && (
         <div>
           <ResultCard testResults={testResults} difficulty={difficulty} />
         </div>
