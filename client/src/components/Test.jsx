@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import TestQuestion from "./TestQuestion";
 import ResultCard from "./ResultCard";
-import {useUser} from "@clerk/clerk-react"
+import { useUser } from "@clerk/clerk-react";
+import axios from "axios";
 
 const api = "http://localhost:3000";
 function Test(props) {
@@ -13,9 +14,9 @@ function Test(props) {
   // const [isTestCompleted, setIsTestCompleted] = useState(false);
   const isTestCompleted = props.isTestCompleted;
   const setIsTestCompleted = props.setIsTestCompleted;
-  // const webcamRef = props.webcamRef; 
-
-  const {user} = useUser();
+  const [username, setUsername] = useState("");
+  const [type, setType] = useState(props.type);
+  // const webcamRef = props.webcamRef;
 
   useEffect(() => {
     fetch(api + "/signs/" + props.type)
@@ -26,20 +27,26 @@ function Test(props) {
       });
   }, []);
 
+  const { user } = useUser();
+  useEffect(() => {
+    setUsername(user.username);
+    setType(props.type);
+  }, [user, props.type]);
   function saveTestResults() {
-    fetch(api + "/test_progress", {
-      method: "POST",
-      body: JSON.stringify({
-        username: user.username,
-        testResults: testResults,
-        test_date: new Date(),
-        type: props.type,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
+    axios
+      .get(api + "/test_progress", {
+        params: {
+          username: username,
+          difficulty: difficulty,
+          test_date: new Date(),
+          type: type,
+          testResults: testResults,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        // setIsTestCompleted(true);
+      })
       .catch((err) => console.log(err));
   }
 
@@ -62,22 +69,25 @@ function Test(props) {
   };
   return (
     <div>
-      {!isTestCompleted && <div>
-        {renderTestQuestions()}
-        <button
-          onClick={() => {
-            // console.log(testResults)
-            setIsTestCompleted(true);
-            saveTestResults();
-          }}
-        >
-          Submit
-        </button>
-      </div>}
-      {isTestCompleted && <div>
-          <ResultCard testResults={testResults} difficulty={difficulty}/>
+      {!isTestCompleted && (
+        <div>
+          {renderTestQuestions()}
+          <button
+            onClick={() => {
+              // console.log(testResults)
+              setIsTestCompleted(true);
+              saveTestResults();
+            }}
+          >
+            Submit
+          </button>
         </div>
-        }
+      )}
+      {isTestCompleted && (
+        <div>
+          <ResultCard testResults={testResults} difficulty={difficulty} />
+        </div>
+      )}
     </div>
   );
 }

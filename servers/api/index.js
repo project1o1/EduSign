@@ -87,19 +87,19 @@ app.get('/signs/:type', async (req, res) => {
 }
 );
 
-app.post('/test_progress', async (req, res) => {
-    const { username, type, test_date, testResults } = req.query;
-    const UpperType = type.charAt(0).toUpperCase() + type.slice(1);
-    Object.keys(testResults).forEach((key) => {
-        testResults[key] = testResults[key] ? 1 : 0;
-    });
-    var progress = await client.execute({
-        sql: "INSERT INTO test_progress(username,type,test_date,test_results) VALUES(?,?,?,?)",
-        args: [username, UpperType, test_date, testResults],
+app.get('/test_progress', async (req, res) => {
+    const { username, type, test_date, testResults, difficulty } = req.query;
+    // const UpperType = type.charAt(0).toUpperCase() + type.slice(1);
+    const results = Object.entries(testResults).map(([name, percentage]) => ({
+        name,
+        percentage,
+    }));
+    const progress = await client.execute({
+        sql: "INSERT INTO test_progress(username,type,test_date,name,accuracy,difficulty) VALUES(?,?,?,?,?,?)",
+        args: results.flatMap(({ name, percentage }) => [username, type, test_date, name, percentage, difficulty]),
     });
     res.json(progress.rows);
-}
-);
+});
 
 app.listen(3000, () => {
     console.log('Server started on port 3000');

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/LearnPage.css";
@@ -9,14 +9,14 @@ function TestQuestion(props) {
   const name = props.name;
   const isVisible = props.isVisible;
   const id = props.id;
-  const isVisibles = props.isVisibles;
+  // const isVisibles = props.isVisibles;
   const setIsVisibles = props.setIsVisibles;
   const { type } = useParams();
   const webcamRef = props.webcamRef; // Use the provided webcamRef prop
   const [isRecording, setIsRecording] = useState(false);
   const [error, setError] = useState(null);
   const mainSetTestResults = props.setTestResults;
-  const [testResult, setTestResult] = useState(0);
+  // const [testResult, setTestResult] = useState(0);
   const [thisLevelCompleted, setThisLevelCompleted] = useState(false);
 
   const startRecording = () => {
@@ -39,7 +39,7 @@ function TestQuestion(props) {
         axios
           .post(`${SERVER_URL}/video?name=${name}&id=${id}`, formData)
           .then((response) => {
-            setTestResult(response.data.percentage);
+            // setTestResult(response.data.percentage);
             mainSetTestResults((prevTestResults) => {
               prevTestResults[name] = response.data.percentage;
               return prevTestResults;
