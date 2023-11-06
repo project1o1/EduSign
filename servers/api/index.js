@@ -89,16 +89,13 @@ app.get('/signs/:type', async (req, res) => {
 
 app.get('/test_progress', async (req, res) => {
     const { username, type, test_date, testResults, difficulty } = req.query;
-    // const UpperType = type.charAt(0).toUpperCase() + type.slice(1);
-    const results = Object.entries(testResults).map(([name, percentage]) => ({
-        name,
-        percentage,
-    }));
-    const progress = await client.execute({
-        sql: "INSERT INTO test_progress(username,type,test_date,name,accuracy,difficulty) VALUES(?,?,?,?,?,?)",
-        args: results.flatMap(({ name, percentage }) => [username, type, test_date, name, percentage, difficulty]),
-    });
-    res.json(progress.rows);
+    for (const [name, percentage] of Object.entries(testResults)) {
+        const progress = await client.execute({
+            sql: "INSERT INTO test_progress(username,type,test_date,name,accuracy,difficulty) VALUES(?,?,?,?,?,?)",
+            args: [username, type, test_date, name, percentage, difficulty],
+        });
+    }
+    res.json({ status: "success" });
 });
 
 app.listen(3000, () => {
