@@ -153,6 +153,33 @@ app.get('/stats/test/:username', async (req, res) => {
 }
 );
 
+app.get('/stats/learn/:username', async (req, res) => {
+    const { username } = req.params;
+    const stats = await client.execute({
+        sql: "SELECT type,completed,name FROM learn_progress WHERE username = ?",
+        args: [username],
+    });
+    const rows = stats.rows;
+    
+    // for each type store the total number of unique signs learnt
+    const typeStats = {};
+    rows.forEach((row) => {
+        if (row.type in typeStats) {
+            if (!typeStats[row.type].includes(row.name)) {
+                typeStats[row.type].push(row.name);
+            }
+        } else {
+            typeStats[row.type] = [row.name];
+        }
+    });
+    const typeCount = {};
+    for (const [type, stats] of Object.entries(typeStats)) {
+        typeCount[type] = stats.length;
+    }
+    res.json({typeCount, typeStats});
+}
+);
+
 app.listen(3000, () => {
     console.log('Server started on port 3000');
 });
