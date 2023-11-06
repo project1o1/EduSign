@@ -4,6 +4,7 @@ import TestQuestion from "./TestQuestion";
 import ResultCard from "./ResultCard";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 const api = "http://localhost:3000";
 function Test(props) {
@@ -55,6 +56,7 @@ function Test(props) {
     for (var i = 0; i < testData.length; i++) {
       testQuestions.push(
         <TestQuestion
+          key = {uuidv4()}
           id={i}
           name={testData[i].name}
           isVisible={isVisibles[i]}
