@@ -1,24 +1,23 @@
-function NavigationBar() {
-  const redirectToHome = () => {
-    // Replace this with your home navigation logic
-    console.log('Redirect to Home');
-  };
+import React, { useEffect, useState } from "react";
+import { useUser, UserButton } from "@clerk/clerk-react";
 
-  const redirectToProfile = () => {
-    // Replace this with your profile navigation logic
-    console.log('Redirect to Profile');
-  };
-
+const Navbar = () => {
+  const { user } = useUser();
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    if (user) {
+      setUsername(user.username);
+    }
+  }, [user]);
   return (
-    <div className="navbar">
-      <div className="logo" onClick={redirectToHome}>
-        <img src="logo.png" alt="Logo" />
-      </div>
-      <div className="profile-icon" onClick={redirectToProfile}>
-        <img src="profile-icon.png" alt="Profile" />
+    <div>
+      <h1>EduSign</h1>
+      <div>
+        <p>{username}</p>
+        <UserButton />
       </div>
     </div>
   );
-}
+};
 
-export default NavigationBar;
+export default Navbar;
