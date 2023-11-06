@@ -3,7 +3,7 @@ import Webcam from "react-webcam";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/LearnPage.css";
-
+import { useUser } from "@clerk/clerk-react";
 const SERVER_URL = "http://localhost:8000";
 const api = "http://localhost:3000";
 
@@ -16,7 +16,7 @@ const LearnPage = () => {
   const [error, setError] = useState(null);
   const [percentage, setPercentage] = useState(null);
   const [counter, setCounter] = useState(5);
-
+  const { user } = useUser();
   useEffect(() => {
     let timer;
     if (isSending) {
@@ -102,7 +102,7 @@ const LearnPage = () => {
         console.log(id, type);
         axios.get(`${api}/update_progress`, {
             params: {
-              username: "pavanmanishd",
+              username: user.username,
               type: type,
               name: id,
             },

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import {useUser} from "@clerk/clerk-react";
+
 const api = "http://localhost:3000";
 const CategoryCard = ({ category }) => {
   const navigate = useNavigate();
+  const {user} = useUser();
   // Initialize completed progress to 0 by default
   const [completedProgress, setCompletedProgress] = useState(0);
   const totalProgress = category.count;
@@ -20,7 +23,7 @@ const CategoryCard = ({ category }) => {
     // Get the number of completed words for the category
     axios
       .get(`${api}/progress`, {
-        params: { username: "pavanmanishd", type: category.type },
+        params: { username: user.username, type: category.type },
       })
       .then((res) => {
         console.log("Completed words:", res.data);

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUser } from "@clerk/clerk-react";
 const api = "http://localhost:3000";
 
 const LearnHome = () => {
   const { type } = useParams();
   const [words, setWords] = useState([]);
   const [completedStatus, setCompletedStatus] = useState({});
-
+  const { user } = useUser();
   const navigate = useNavigate();
   useEffect(() => {
     fetch(`${api}/signs/${type}`)
@@ -25,7 +26,7 @@ const LearnHome = () => {
         try {
           const response = await axios.get(`${api}/completed`, {
             params: {
-              username: "pavanmanishd",
+              username: user.username,
               type: type,
               name: word.name,
             },
