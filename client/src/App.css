@@ -1,11 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Bricolage Grotesque:700|Bricolage Grotesque:400");
 
 :root {
-  --text: #080402;
-  --background: #fdf9f7;
-  --primary: #d5ca7c;
-  --secondary: #d2e6b2;
-  --accent: #729a32;
+    --text: #080e07;
+    --background: #f5faf5;
+    --primary: #8dc185;
+    --secondary: #c9e2c5;
+    --accent: #539249;
 }
 
 body {
