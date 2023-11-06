@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import TestQuestion from "./TestQuestion";
 import ResultCard from "./ResultCard";
+import useUser from "@clerk/clerk-react"
 
 const api = "http://localhost:3000";
 function Test(props) {
@@ -14,6 +15,8 @@ function Test(props) {
   const setIsTestCompleted = props.setIsTestCompleted;
   // const webcamRef = props.webcamRef; 
 
+  const {user} = useUser();
+
   useEffect(() => {
     fetch(api + "/signs/" + props.type)
       .then((res) => res.json())
@@ -24,9 +27,14 @@ function Test(props) {
   }, []);
 
   function saveTestResults() {
-    fetch(api + "/testresults", {
+    fetch(api + "/test_progress", {
       method: "POST",
-      body: JSON.stringify(testResults),
+      body: JSON.stringify(JSON.JSON({
+        username: user.username,
+        testResults: testResults,
+        test_date: new Date(),
+        type: props.type,
+      })),
       headers: {
         "Content-Type": "application/json",
       },
@@ -60,7 +68,7 @@ function Test(props) {
           onClick={() => {
             // console.log(testResults)
             setIsTestCompleted(true);
-
+            saveTestResults();
           }}
         >
           Submit
