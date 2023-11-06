@@ -87,12 +87,25 @@ app.get('/signs/:type', async (req, res) => {
 }
 );
 
+// route to get the test questions of random signs of particular number
+app.get('/test/:type/:number', async (req, res) => {    
+    const { type, number } = req.params;
+    const Upper = type.charAt(0).toUpperCase() + type.slice(1);
+    const signs = await client.execute({
+        sql: "SELECT * FROM signs WHERE type = ? ORDER BY RANDOM() LIMIT ?",
+        args: [Upper, number],
+    });
+    res.json(signs.rows);
+}
+);
+
 app.get('/test_progress', async (req, res) => {
     const { username, type, test_date, testResults, difficulty } = req.query;
+    const Upper = type.charAt(0).toUpperCase() + type.slice(1);
     for (const [name, percentage] of Object.entries(testResults)) {
         const progress = await client.execute({
             sql: "INSERT INTO test_progress(username,type,test_date,name,accuracy,difficulty) VALUES(?,?,?,?,?,?)",
-            args: [username, type, test_date, name, percentage, difficulty],
+            args: [username, Upper, test_date, name, percentage, difficulty],
         });
     }
     res.json({ status: "success" });

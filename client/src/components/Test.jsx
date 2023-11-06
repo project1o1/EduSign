@@ -20,7 +20,7 @@ function Test(props) {
   // const webcamRef = props.webcamRef;
 
   useEffect(() => {
-    fetch(api + "/signs/" + props.type)
+    fetch(api + "/test/" + props.type + "/" + 5)
       .then((res) => res.json())
       .then((data) => {
         setTestData(data);
