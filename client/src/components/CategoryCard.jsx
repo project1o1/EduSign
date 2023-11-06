@@ -30,7 +30,7 @@ const CategoryCard = ({ category }) => {
         setCompletedProgress(res.data.length);
         // console.log("Completed progress:", completedProgress);
       });
-  }, [category.id]);
+  }, [category.id,user]);
 
   return (
     <div onClick={handleClick}>

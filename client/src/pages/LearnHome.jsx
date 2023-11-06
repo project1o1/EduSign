@@ -40,7 +40,7 @@ const LearnHome = () => {
       setCompletedStatus(statusMap);
     };
     updateCompletedStatus();
-  }, [words, type]);
+  }, [words, type, user]);
 
   const handleClick = (word) => {
     console.log("Selected word:", word);
