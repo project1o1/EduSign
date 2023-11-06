@@ -134,13 +134,7 @@ app.get('/stats/test/:username', async (req, res) => {
     for (const [date, stats] of Object.entries(dateStats)) {
         stats.accuracy = stats.accuracy / stats.tests;
     }
-    const dates = [];
-    for (const [date, stats] of Object.entries(dateStats)) {
-        const dateOnly = date.split("T")[0];
-        if (!dates.includes(dateOnly)) {
-            dates.push(dateOnly);
-        }
-    }
+    const dates = Object.keys(dateStats);
     console.log({ difficultyStats, dateStats,dates });
     res.json({ difficultyStats, dateStats, dates });
 }
