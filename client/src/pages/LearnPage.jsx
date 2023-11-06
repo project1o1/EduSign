@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/LearnPage.css";
+// import "../styles/LearnPage.css";
 import { useUser } from "@clerk/clerk-react";
 const SERVER_URL = "http://localhost:8000";
 const api = "http://localhost:3000";

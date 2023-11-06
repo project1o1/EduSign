@@ -18,7 +18,7 @@ import {
   RedirectToSignIn,
 } from "@clerk/clerk-react";
 import variables from "../config/index";
-
+import "./App.css";
 const clerkPubKey = variables.REACT_APP_CLERK_PUBLISHABLE_KEY;
 console.log(clerkPubKey);
 
