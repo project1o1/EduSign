@@ -13,7 +13,7 @@ const Navbar = () => {
     <div>
       <h1>EduSign</h1>
       <div>
-        <p>{username}</p>
+        <p>Hello, {username}</p>
         <UserButton />
       </div>
     </div>

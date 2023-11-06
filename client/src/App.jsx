@@ -9,6 +9,8 @@ import Working from "./pages/Working";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import { Routes, useNavigate } from "react-router-dom";
+import Navbar from "./components/Navbar"
+import Sidebar from "./components/Sidebar"
 import {
   ClerkProvider,
   SignedIn,
@@ -25,6 +27,8 @@ function App() {
   return (
     <ClerkProvider publishableKey={clerkPubKey} navigate={(to) => navigate(to)}>
       <SignedIn>
+        <Navbar />
+        <Sidebar />
         <Routes>
           <Route
             path="/"

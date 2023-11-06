@@ -17,7 +17,6 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <h1>EduSign</h1>
       <div className="sidebar-buttons">
         {Object.keys(buttons).map((button, index) => (
           <div
