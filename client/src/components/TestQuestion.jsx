@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/LearnPage.css";
 
+const SERVER_URL = "http://localhost:8000"; // Replace with your server URL
 function TestQuestion(props) {
   const name = props.name;
   const isVisible = props.isVisible;
@@ -16,7 +17,6 @@ function TestQuestion(props) {
   const [error, setError] = useState(null);
   const mainSetTestResults = props.setTestResults;
   const [testResult, setTestResult] = useState(0);
-  const SERVER_URL = "http://192.168.0.106:8000"; // Replace with your server URL
   const [thisLevelCompleted, setThisLevelCompleted] = useState(false);
 
   const startRecording = () => {

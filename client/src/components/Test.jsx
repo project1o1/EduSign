@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import TestQuestion from "./TestQuestion";
 import ResultCard from "./ResultCard";
-import useUser from "@clerk/clerk-react"
+import {useUser} from "@clerk/clerk-react"
 
 const api = "http://localhost:3000";
 function Test(props) {
@@ -29,12 +29,12 @@ function Test(props) {
   function saveTestResults() {
     fetch(api + "/test_progress", {
       method: "POST",
-      body: JSON.stringify(JSON.JSON({
+      body: JSON.stringify({
         username: user.username,
         testResults: testResults,
         test_date: new Date(),
         type: props.type,
-      })),
+      }),
       headers: {
         "Content-Type": "application/json",
       },
