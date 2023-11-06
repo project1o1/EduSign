@@ -98,6 +98,54 @@ app.get('/test_progress', async (req, res) => {
     res.json({ status: "success" });
 });
 
+app.get('/stats/test/:username', async (req, res) => {
+    const { username } = req.params;
+    const stats = await client.execute({
+        sql: "SELECT test_date,difficulty,accuracy,type FROM test_progress WHERE username = ?",
+        args: [username],
+    });
+    const rows = stats.rows;
+    // for each difficulty store the total number of tests taken and the average accuracy, all the cases with the same test date are considered as one test
+    const difficultyStats = {};
+    rows.forEach((row) => {
+        if (row.difficulty in difficultyStats) {
+            difficultyStats[row.difficulty].tests += 1;
+            difficultyStats[row.difficulty].accuracy += row.accuracy;
+        } else {
+            difficultyStats[row.difficulty] = { tests: 1, accuracy: row.accuracy };
+        }
+    });
+    // for each difficulty calculate the average accuracy
+    for (const [difficulty, stats] of Object.entries(difficultyStats)) {
+        stats.accuracy = stats.accuracy / stats.tests;
+    }
+
+    // for each test date store the total number of tests taken and the average accuracy, all the cases with the same test date are considered as one test
+    const dateStats = {};
+    rows.forEach((row) => {
+        if (row.test_date in dateStats) {
+            dateStats[row.test_date].tests += 1;
+            dateStats[row.test_date].accuracy += row.accuracy;
+        } else {
+            dateStats[row.test_date] = { tests: 1, accuracy: row.accuracy ,type: row.type};
+        }
+    });
+    // for each test date calculate the average accuracy
+    for (const [date, stats] of Object.entries(dateStats)) {
+        stats.accuracy = stats.accuracy / stats.tests;
+    }
+    const dates = [];
+    for (const [date, stats] of Object.entries(dateStats)) {
+        const dateOnly = date.split("T")[0];
+        if (!dates.includes(dateOnly)) {
+            dates.push(dateOnly);
+        }
+    }
+    console.log({ difficultyStats, dateStats,dates });
+    res.json({ difficultyStats, dateStats, dates });
+}
+);
+
 app.listen(3000, () => {
     console.log('Server started on port 3000');
 });
