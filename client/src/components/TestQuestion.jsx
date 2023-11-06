@@ -16,8 +16,8 @@ function TestQuestion(props) {
   const [isRecording, setIsRecording] = useState(false);
   const [error, setError] = useState(null);
   const mainSetTestResults = props.setTestResults;
-  // const [testResult, setTestResult] = useState(0);
   const [thisLevelCompleted, setThisLevelCompleted] = useState(false);
+  const [isResponseReceived, setIsResponseReceived] = useState(false);
 
   const startRecording = () => {
     if (webcamRef.current) {
@@ -45,6 +45,7 @@ function TestQuestion(props) {
               return prevTestResults;
             });
             console.log(response.data.percentage)
+            setIsResponseReceived(true);
           })
           .catch((error) => {
             setError("Error sending the video to the server. Please try again."+error);
@@ -57,8 +58,6 @@ function TestQuestion(props) {
         mediaRecorder.stop();
         setIsRecording(false);
         setThisLevelCompleted(true);
-        
-        
       }, 5000);
     } else {
       setError("Webcam not available.");
@@ -66,12 +65,14 @@ function TestQuestion(props) {
   };
 
   const onNext = () => {
-    setIsVisibles((prevIsVisibles) => {
-      const newIsVisibles = [...prevIsVisibles];
-      newIsVisibles[id] = false;
-      newIsVisibles[id + 1] = true;
-      return newIsVisibles;
-    });
+    if (isResponseReceived) {
+      setIsVisibles((prevIsVisibles) => {
+        const newIsVisibles = [...prevIsVisibles];
+        newIsVisibles[id] = false;
+        newIsVisibles[id + 1] = true;
+        return newIsVisibles;
+      });
+    }
   };
 
   return (
@@ -94,7 +95,7 @@ function TestQuestion(props) {
             <button onClick={startRecording} disabled={isRecording} className="capture-button">
               {thisLevelCompleted ? "Retry" : isRecording ? "Recording..." : "Start Recording"}
             </button>
-            {thisLevelCompleted && <button onClick={onNext} className="capture-button">
+            {thisLevelCompleted && isResponseReceived && <button onClick={onNext} className="capture-button">
               Next
             </button>}
           </div>
