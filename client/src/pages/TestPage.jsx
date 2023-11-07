@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import Instructions from "../components/Instructions";
 import Test from "../components/Test";
 import Webcam from "react-webcam";
-import LoadingScreen from "../components/LoadingScreen";
+import LoadingScreen from "./Loading";
 import "../styles/TestPage.css";
 
 function TestPage() {
