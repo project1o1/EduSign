@@ -38,15 +38,15 @@
 }
 
 .placeholder-image {
-  width: 100%;
-  height: auto;
+  height: 480px;
+  width: auto;
   border-radius: 8px;
 }
 
 /* Webcam container */
 .webcam-container {
   flex: 1;
-  border-radius: 8px;
+  border-radius: 30px;
 }
 
 /* Error message */

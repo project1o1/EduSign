@@ -82,7 +82,8 @@ const LearnPage = () => {
   const sendVideoToServer = async (video) => {
     try {
       const formData = new FormData();
-      const url = `${SERVER_URL}/video?name=${id}`;
+      const Upper = type.charAt(0).toUpperCase() + type.slice(1);
+      const url = `${SERVER_URL}/video?name=${id}&type=${Upper}`;
       formData.append("video", video);
       formData.append("type", type);
       formData.append("name", id);
@@ -141,8 +142,8 @@ const LearnPage = () => {
   return (
     <div className="learn-page-container">
       <div className="learn-header">
-        <h1>Learning {type}</h1>
-        <h2>Lesson: {id}</h2>
+        <h1 style={{margin:0}}>Learning {type}</h1>
+        <h2 style={{margin:0}}>Lesson: {id}</h2>
       </div>
 
       {isLoading ? ( // Display loading screen while image URL is being fetched
