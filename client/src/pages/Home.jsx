@@ -4,6 +4,8 @@ import { useUser } from "@clerk/clerk-react";
 import CircularProgressBar from "../components/CircularProgressBar";
 import CommitGraph from "../components/CommitGraph";
 import DifficultyAccuracyBarChart from "../components/DifficultyAccuracyBarChart";
+import LoadingScreen from "./Loading";
+
 const api = "http://localhost:3000";
 
 const Home = () => {
@@ -13,28 +15,27 @@ const Home = () => {
   const [testStats, setTestStats] = useState(null);
   const [totalSigns, setTotalSigns] = useState(null);
   const [learnStats, setLearnStats] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Track loading state
+
   useEffect(() => {
     async function fetchStats() {
-      fetch(`${api}/stats/test/${user.username}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setTestStats(data);
-        });
+      // Fetch user stats
+      const testStatsResponse = fetch(`${api}/stats/test/${user.username}`);
+      const learnStatsResponse = fetch(`${api}/stats/learn/${user.username}`);
+      const totalSignsResponse = fetch(`${api}/types`);
 
-      fetch(`${api}/stats/learn/${user.username}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setLearnStats(data);
-        });
+      // Wait for all responses
+      const [testStatsData, learnStatsData, totalSignsData] = await Promise.all([
+        testStatsResponse.then((res) => res.json()),
+        learnStatsResponse.then((res) => res.json()),
+        totalSignsResponse.then((res) => res.json()),
+      ]);
 
-      fetch(`${api}/types`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setTotalSigns(data);
-        });
+      // Set the fetched data and mark loading as complete
+      setTestStats(testStatsData);
+      setLearnStats(learnStatsData);
+      setTotalSigns(totalSignsData);
+      setIsLoading(false);
     }
 
     if (user) {
@@ -49,7 +50,7 @@ const Home = () => {
   };
 
   const LearnStats = () => {
-    if (!learnStats) return <div></div>;
+    if (!learnStats) return null;
     return (
       <div>
         <h2 style={{ color: "#212529" }}>Learning Stats</h2>
@@ -69,19 +70,26 @@ const Home = () => {
   };
 
   const TestStats = () => {
+    if (isLoading) return null;
+    if (!testStats) return null;
+
     return (
       <div>
-          <h2 style={{ color: "#212529" }}>Test Results</h2>
-          <div style={{display:"flex",justifyContent:"space-evenly"}}>
-            <div style={{ display: "flex", justifyContent: "flex-start" }}>
-              <CommitGraph commitDates={testStats?.dates} />
-            </div>
-            {testStats &&  <div style={{ display: "flex", justifyContent: "flex-start" }}>
-              <DifficultyAccuracyBarChart data={testStats} />
-            </div>}
+        <h2 style={{ color: "#212529" }}>Test Results</h2>
+        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <div style={{ display: "flex", justifyContent: "flex-start" }}>
+            <CommitGraph commitDates={testStats?.dates} />
+          </div>
+          <div style={{ display: "flex", justifyContent: "flex-start" }}>
+            <DifficultyAccuracyBarChart data={testStats} />
           </div>
         </div>
+      </div>
     );
+  };
+
+  if (isLoading) {
+    return <LoadingScreen />; // Show loading screen while fetching data
   }
 
   return (

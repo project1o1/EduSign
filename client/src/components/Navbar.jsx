@@ -38,7 +38,7 @@ const Navbar = () => {
         borderBottom: "1px solid #dee2e6",
       }}
         >
-        <h1 style={{ fontSize: "2rem", cursor:"pointer" }} onClick={()=>{navigate('/')}}>EduSign</h1>
+        <h1 style={{ fontSize: "2rem", cursor:"pointer", marginLeft: "20px" }} onClick={()=>{navigate('/')}}>EduSign</h1>
         <div style={{ display: "flex", alignItems: "center" , paddingRight:"2rem" }}>
           {/* <p style={{ paddingRight: "1rem" }}>Profile</p> */}
           <UserButton />

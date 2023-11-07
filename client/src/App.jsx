@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import Home from "./pages/Home";
 import LearnPage from "./pages/LearnPage";
@@ -20,6 +20,7 @@ import {
 } from "@clerk/clerk-react";
 import variables from "../config/index";
 import "./App.css";
+import LoadingScreen from "./pages/Loading";
 
 const clerkPubKey = variables.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
@@ -44,6 +45,8 @@ function App() {
                   <Route path="/test/:type" element={<TestPage />} />
                   <Route path="/working" element={<Working />} />
                   <Route path="/about" element={<About />} />
+                  <Route path="/load" element={<LoadingScreen />} />
+
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </div>
