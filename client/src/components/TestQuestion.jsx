@@ -91,8 +91,8 @@ function TestQuestion(props) {
       {isVisible && (
         <div className="learn-page-container">
           <div className="learn-header">
-            <h3>Test Type : {type}</h3>
-            <h3>Test Word : {name}</h3>
+            {/* <h3>Test Type : {type}</h3> */}
+            <h3>Do the sign for "{name}"</h3>
           </div>
           <div className="content-container">
             <div className="image-container">

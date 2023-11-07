@@ -37,7 +37,8 @@ function TestPage() {
             <div className="test-container">
               {!isTestCompleted && (
                 <div>
-                  <h1>Test</h1>
+                  <h1>Test Category : {type}</h1>
+                  {/* <h5>Category : {type}</h5> */}
                   <div className="webcam-container">
                     <Webcam
                       className="webcam"
