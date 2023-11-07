@@ -12,6 +12,10 @@ function PreviousTestCard(props) {
     <div className="previous-test" key={uuidv4()}>
       <div className="previous-test-stats">
         <div className="previous-test-stat">
+          <h3>Type</h3>
+          <p>{previousTest.type}</p>
+        </div>
+        <div className="previous-test-stat">
           <h3>Questions</h3>
           <p>{previousTest.tests}</p>
         </div>
@@ -19,13 +23,8 @@ function PreviousTestCard(props) {
           <h3>Accuracy</h3>
           <p>{Math.round(previousTest.accuracy * 100) / 100}%</p>
         </div>
-        <div className="previous-test-stat">
-          <h3>Type</h3>
-          <p>{previousTest.type}</p>
-        </div>
       </div>
-      <p>Date: {dt[0]}</p>
-      <p>Time: {time}</p>
+      <span>{dt[0]} / {time}</span>
     </div>
   );
 }

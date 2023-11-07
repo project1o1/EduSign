@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import PreviousTestCard from "./PreviousTestCard";
 import "../styles/Test.css";
 
+const previous_test_number = 4;
 function PreviousTests() {
   const [previousTests, setPreviousTests] = useState(null);
   const api = "http://localhost:3000";
@@ -24,7 +25,7 @@ function PreviousTests() {
 
   const renderPreviousTests = () => {
     return Object.keys(previousTests.dateStats)
-      .slice(0, 5)
+      .slice(0, previous_test_number).reverse()
       .map((date) => (
         <PreviousTestCard
           date={date}
