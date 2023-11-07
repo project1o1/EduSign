@@ -18,8 +18,7 @@ const Learn = () => {
 
   const categoryList = categories.map((category) => {
     return (
-      <div key={uuid()}>
-        {/* <p>{category}</p> */}
+      <div key={uuid()} style={{ display: 'flex', flexDirection: 'row' }}>
         <CategoryCard category={category} />
       </div>
     );
@@ -28,8 +27,10 @@ const Learn = () => {
   return (
     <div>
       <h1>Learn</h1>
-        <h2>Select a category</h2>
-        {categoryList}
+      <h2>Select a category</h2>
+      <div style={{display:'flex'}}>
+      {categoryList}
+      </div>
     </div>
   );
 };
