@@ -47,6 +47,8 @@ const About = () => {
           life for individuals with diverse communication needs.
         </p>
       </div>
+      <div className="container">
+
       <div className="github-section">
         <h2>GitHub</h2>
         <div className="github-card">
@@ -76,10 +78,15 @@ const About = () => {
           )}
         </div>
       </div>
-      <h2>Team</h2>
       <div className="team-section">
+      <h2>Team</h2>
         {userDetails.map((user, index) => (
           <div className="team-member" key={index}>
+             <a
+                  href={user.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
             <div className="user-container">
               <img
                 src={user.avatar_url}
@@ -92,13 +99,15 @@ const About = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {user.login}
+                  @{user.login}
                 </a>
               </p>
-              {user.bio && <p className="user-bio">{user.bio}</p>}
+              {/* {user.bio && <p className="user-bio">{user.bio}</p>} */}
             </div>
+            </a>
           </div>
         ))}
+      </div>
       </div>
     </div>
   );

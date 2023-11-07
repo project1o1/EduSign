@@ -6,92 +6,154 @@
   margin-bottom: 20px;
   padding-left: 20px;
   padding-right: 20px;
-  
-}
-.mission-section{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+  /* height: 100%; */
 }
 
-.mission-section h1{
+h1{
     font-size: 2.5rem;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+p{
+    margin: 0%;    
 }
 
-.mission-section p{
-    text-align: left;
-    font-size: 1.3rem;
+.mission-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-.github-section{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+.mission-section h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
-.github-card{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
+.mission-section p {
+  text-align: left;
+  font-size: 1.3rem;
 }
 
-.github-card>div{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    padding: 1.5rem 1rem 0.5rem ;
-    background-color: black;
-    color: aliceblue;
-    border-radius: 30px;
-    cursor: pointer;
-
+.github-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-.github-card>div:hover{
-    background-color: #1f1f1f;
-    color: #ffffff;
+.github-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.github-card div div{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+.github-card > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding: 1.5rem 1rem 0.5rem;
+  background-color: black;
+  color: aliceblue;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
-
-.github-card img{
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    margin-right: 20px;
+.github-card > div:hover {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  transform: scale(1.03);
 }
 
-.github-card p{
-    padding: 0px;
-    margin: 5px;
+.github-card div div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-.github-card a{
-    text-decoration: none;
-    color: aliceblue;
-    /*Add underline*/
-    border-bottom: 1px solid aliceblue;
+.github-card img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.github-card p {
+  padding: 0px;
+  margin: 5px;
+}
+
+.github-card a {
+  text-decoration: none;
+  color: aliceblue;
+  /*Add underline*/
+  border-bottom: 1px solid aliceblue;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
+
+.team-member {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: black;
+  color: aliceblue;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.team-member:hover {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  transform: scale(1.03);
+}
+
+.user-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  color: aliceblue;
+  margin: 1rem;
+}
+
+.user-container > img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  /* margin-right: 20px; */
+}
+
+.user-container a {
+  text-decoration: none;
+  color: aliceblue;
+  /*Add underline*/
+  border-bottom: 1px solid aliceblue;
 }
