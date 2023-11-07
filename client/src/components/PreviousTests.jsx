@@ -1,9 +1,10 @@
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import PreviousTestCard from "./PreviousTestCard";
+import "../styles/Test.css";
 
 function PreviousTests() {
   const [previousTests, setPreviousTests] = useState(null);
@@ -14,7 +15,6 @@ function PreviousTests() {
     axios
       .get(api + "/stats/test/" + user.username)
       .then((response) => {
-        // console.log(response.data);
         setPreviousTests(response.data);
       })
       .catch((error) => {
@@ -22,22 +22,20 @@ function PreviousTests() {
       });
   }, []);
 
-  // previousTests.dateStats => data : tests, accuracy, type
   const renderPreviousTests = () => {
-    let ptc = [];
-    Object.keys(previousTests.dateStats)
+    return Object.keys(previousTests.dateStats)
       .slice(0, 5)
-      .map((date) => {
-        ptc.push(
-          <PreviousTestCard date={date} previousTest={previousTests.dateStats[date]} key={uuidv4()} />
-        );
-      });
-    return ptc;
+      .map((date) => (
+        <PreviousTestCard
+          date={date}
+          previousTest={previousTests.dateStats[date]}
+          key={uuidv4()}
+        />
+      ));
   };
 
   return (
-    <div className="previous-tests">
-      <h2>Previous Tests</h2>
+    <div className="previous-tests-container">
       {previousTests && (
         <div className="previous-tests-list">{renderPreviousTests()}</div>
       )}
