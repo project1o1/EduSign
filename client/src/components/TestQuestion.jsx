@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 // import "../styles/LearnPage.css";
 import "../styles/TestComponent.css";
-
-const SERVER_URL = "http://localhost:8000"; // Replace with your server URL
+import variables from "../config";
+const SERVER_URL = variables.MODEL_URL; // Replace with your server URL
 function TestQuestion(props) {
   const name = props.name;
   const isVisible = props.isVisible;

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
-
-const api = "http://localhost:3000";
+import variables from "../config";
+const api = variables.API_URL;
 const CategoryCard = ({ category }) => {
   const navigate = useNavigate();
   const { user } = useUser();

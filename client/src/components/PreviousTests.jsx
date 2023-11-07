@@ -5,11 +5,11 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import PreviousTestCard from "./PreviousTestCard";
 import "../styles/Test.css";
-
-const previous_test_number = 4;
+import variables from "../config";
+const api = variables.API_URL;
+const previous_test_number = 3;
 function PreviousTests() {
   const [previousTests, setPreviousTests] = useState(null);
-  const api = "http://localhost:3000";
   const { user } = useUser();
 
   useEffect(() => {

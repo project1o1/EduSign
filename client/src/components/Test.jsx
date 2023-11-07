@@ -5,10 +5,13 @@ import ResultCard from "./ResultCard";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 import "../styles/TestComponent.css";
-const api = "http://localhost:3000";
+import variables from "../config";
+const api = variables.API_URL;
 const test_questions_number = 5;
 function Test(props) {
+  const navigate = useNavigate();
   const difficulty = props.difficulty;
   const [testData, setTestData] = useState([]);
   const [isVisibles, setIsVisibles] = useState([true, false]);
@@ -76,19 +79,39 @@ function Test(props) {
   };
   return (
     <div className="test-container">
-      {!isTestCompleted && <div className="test-questions-container">{renderTestQuestions()}</div>}
-      {isTestCompleted && (
-        <button
-          className="submit-button"
-          onClick={() => {
-            setIsTestCompleted(true);
-            saveTestResults();
-          }}
-        >
-          Submit
-        </button>
+      {!isTestCompleted && (
+        <div className="test-questions-container">{renderTestQuestions()}</div>
       )}
-      {isSubmitted && <ResultCard testResults={testResults} difficulty={difficulty} />}
+      {isTestCompleted && !isSubmitted && (
+        <div>
+          <h3>All the questions are attempted </h3>
+          <button
+            className="submit-button"
+            onClick={() => {
+              setIsTestCompleted(true);
+              saveTestResults();
+            }}
+          >
+            Submit
+          </button>
+        </div>
+      )}
+      {isSubmitted && (
+        <div>
+          <h3>Test Submitted Successfully</h3>
+          <ResultCard testResults={testResults} difficulty={difficulty} />
+          <button
+            className="submit-button"
+            onClick={() => {
+              setIsTestCompleted(false);
+              setIsSubmitted(false);
+              navigate("/test");
+            }}
+          >
+            Go Back
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -3,7 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import LoadingScreen from "./Loading"; // Import the LoadingScreen component
-const api = "http://localhost:3000";
+import variables from "../config";
+const api = variables.API_URL;
 
 const LearnHome = () => {
   const { type } = useParams();

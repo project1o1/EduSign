@@ -3,8 +3,9 @@ import { v4 as uuid } from "uuid";
 import "../components/CategoryCard";
 import CategoryCard from "../components/CategoryCard";
 import LoadingScreen from "./Loading"; // Import the LoadingScreen component
+import variables from "../config";
 
-const api = "http://localhost:3000";
+const api = variables.API_URL;
 
 const Learn = () => {
   const [categories, setCategories] = useState([]);
