@@ -87,6 +87,17 @@ app.get('/signs/:type', async (req, res) => {
 }
 );
 
+app.get('/signs/:type/:name', async (req, res) => {
+    const { type, name } = req.params;
+    const Upper = type.charAt(0).toUpperCase() + type.slice(1);
+    const signs = await client.execute({
+        sql: "SELECT * FROM signs WHERE type = ? AND name = ?",
+        args: [Upper, name],
+    });
+    res.json(signs.rows[0]);
+}
+);
+
 // route to get the test questions of random signs of particular number
 app.get('/test/:type/:number', async (req, res) => {    
     const { type, number } = req.params;

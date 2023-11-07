@@ -1,79 +1,100 @@
+/* Learn page container */
 .learn-page-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 50px;
-  }
-  
-  .learn-header h1 {
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .learn-header h2 {
-    font-size: 1.5rem;
-    color: #555;
-    margin: 5px 0;
-  }
-  
-  .instruction-container {
-    text-align: center;
-    margin: 20px 0;
-  }
-  
-  .instruction-text {
-    font-size: 1.2rem;
-    color: #666;
-    margin: 10px 0;
-  }
-  
-  .content-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .image-container,
-  .webcam-container {
-    margin: 0 20px;
-  }
-  
-  .placeholder-image {
-    width: 300px;
-    height: 300px;
-    object-fit: cover;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .error-message {
-    color: red;
-    margin: 20px 0;
-  }
-  
-  .button-container {
-    margin-top: 20px;
-  }
-  
-  .capture-button {
-    padding: 15px 30px;
-    border: none;
-    border-radius: 30px;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .capture-button:disabled {
-    background-color: #a0a0a0;
-    cursor: not-allowed;
-  }
-  
-  .capture-button:hover:enabled {
-    background-color: #45a049;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 20px;
+}
+
+/* Header */
+.learn-header {
+  /* text-align: center; */
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 20px;
+}
+
+/* Instruction container */
+.instruction-container {
+  /* text-align: center; */
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 20px;
+}
+
+/* Media container */
+.media-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Image container */
+.image-container {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.placeholder-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Webcam container */
+.webcam-container {
+  flex: 1;
+  border-radius: 8px;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 20px;
+}
+
+/* Button container */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.capture-button,
+.next-lesson-button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.capture-button:hover,
+.next-lesson-button:hover {
+  background-color: #45a049;
+}
+
+/* Instruction text */
+.instruction-text {
+  text-align: left;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Loading text */
+p {
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 20px;
+}

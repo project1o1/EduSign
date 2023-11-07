@@ -2,8 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-// import "../styles/LearnPage.css";
 import { useUser } from "@clerk/clerk-react";
+import "../styles/LearnPage.css";
 const SERVER_URL = "http://localhost:8000";
 const api = "http://localhost:3000";
 
@@ -17,6 +17,7 @@ const LearnPage = () => {
   const [percentage, setPercentage] = useState(null);
   const [counter, setCounter] = useState(5);
   const { user } = useUser();
+  const [imageUrl, setImageUrl] = useState(null);
   useEffect(() => {
     let timer;
     if (isSending) {
@@ -32,6 +33,19 @@ const LearnPage = () => {
     }
     return () => clearInterval(timer);
   }, [isSending]);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const response = await axios.get(`${api}/signs/${type}/${id}`);
+        console.log(response.data.image_url); 
+        setImageUrl(response.data.image_url);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchImage();
+  }, []);
 
   const captureVideo = () => {
     setIsSending(true);
@@ -100,7 +114,8 @@ const LearnPage = () => {
       } else {
         // return "Start";
         console.log(id, type);
-        axios.get(`${api}/update_progress`, {
+        axios
+          .get(`${api}/update_progress`, {
             params: {
               username: user.username,
               type: type,
@@ -121,37 +136,45 @@ const LearnPage = () => {
   return (
     <div className="learn-page-container">
       <div className="learn-header">
-        <h1>Learn</h1>
-        <h2>{type}</h2>
-        <h2>{id}</h2>
+        <h1>Learning {type}</h1>
+        <h2>Lesson: {id}</h2>
+      </div>
+
+      <div className="content-container">
+        <div className="media-container">
+          <div className="image-container">
+            {imageUrl && <img
+              src={imageUrl}
+              alt="Placeholder"
+              className="placeholder-image"
+            />}
+          </div>
+          <div className="webcam-container">
+            <Webcam
+              audio={false}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+            />
+          </div>
+        </div>
       </div>
       <div className="instruction-container">
-        <p className="instruction-text">
-          Please position yourself properly in front of the webcam and mimic the
-          sign corresponding to the displayed word. Click the "Start" button to
-          capture and send the frames to the server for validation.
-        </p>
-        <p className="instruction-text">
-          Make sure the sign is clear and well-captured to ensure accurate
-          validation results.
-        </p>
-      </div>
-      <div className="content-container">
-        <div className="image-container">
-          <img
-            src="https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
-            alt="Placeholder"
-            className="placeholder-image"
-          />
-        </div>
-        <div className="webcam-container">
-          <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
-        </div>
+        <ul>
+          <li className="instruction-text">
+            Please position yourself properly in front of the webcam and mimic
+            the sign corresponding to the displayed word. Click the "Start"
+            button to capture and send the frames to the server for validation.
+          </li>
+          <li className="instruction-text">
+            Make sure the sign is clear and well-captured to ensure accurate
+            validation results.
+          </li>
+        </ul>
       </div>
       {error && <p className="error-message">{error}</p>}
       {isProcessing && <p>Processing...</p>}
       {isSending && <p>{counter}</p>}
-      {percentage !== null && <p>Percentage: {percentage}</p>}
+      {percentage !== null && <p>Progress: {percentage}%</p>}
       <div className="button-container">
         <button
           onClick={captureVideo}
@@ -162,6 +185,7 @@ const LearnPage = () => {
         </button>
         {nextLessonButton}
       </div>
+      
     </div>
   );
 };
