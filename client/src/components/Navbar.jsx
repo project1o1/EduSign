@@ -35,6 +35,7 @@ const Navbar = () => {
         top: 0,
         width: "100%",
         zIndex: 2,
+        borderBottom: "1px solid #dee2e6",
       }}
         >
         <h1 style={{ fontSize: "2rem", cursor:"pointer" }} onClick={()=>{navigate('/')}}>EduSign</h1>

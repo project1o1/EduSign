@@ -19,7 +19,7 @@ const Working = () => {
   };
 
   return (
-    <div style={{ marginLeft: "30px" }}>
+    <div style={{ width: "100%" }}>
       <h1>How it Works??</h1>
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div style={sectionStyle}>
