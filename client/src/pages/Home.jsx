@@ -51,7 +51,15 @@ const Home = () => {
     if (!learnStats) return null;
     return (
       <div>
-        <h2 style={{ color: "#212529" }}>Learning Stats</h2>
+        <div style={{ display: "flex",flexDirection:"column", justifyContent: "flex-start",alignItems:"flex-start" }}>
+        <h2 style={{ color: "#212529",marginBottom:0 }}>Learning Stats</h2>
+        <p style={{padding:0,margin:"10px",cursor:"pointer",borderBottom:"1px solid",paddingLeft:"3px"}}
+          onMouseDown={() => {
+            window.location.href = "/learn";
+          }
+          }
+        >Start Learning↗</p>
+        </div>
         <div style={{ display: "flex", justifyContent: "flex-start" }}>
           {Object.keys(learnStats.typeCount).map((type) => (
             <CircularProgressBar
@@ -73,7 +81,15 @@ const Home = () => {
 
     return (
       <div>
-        <h2 style={{ color: "#212529" }}>Test Results</h2>
+        <div style={{ display: "flex",flexDirection:"column", justifyContent: "flex-start",alignItems:"flex-start" }}>
+          <h2 style={{ color: "#212529",marginBottom:"0px" }}>Test Results</h2>
+          <p style={{padding:0,margin:"10px",cursor:"pointer",borderBottom:"1px solid",paddingLeft:"3px"}}
+            onMouseDown={() => {
+              window.location.href = "/test";
+            }
+            }
+          >Take a Test↗</p>
+        </div>
         <div style={{ display: "flex", justifyContent: "space-evenly" }}>
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
             <CommitGraph commitDates={testStats?.dates} />

@@ -27,10 +27,6 @@ function TestHome() {
 
   return (
     <div className="test-home-container">
-      <h2>Previous Tests</h2>
-      <div className="previous-tests-container">
-        <PreviousTests />
-      </div>
       <div>
         <h2>Take a Test</h2>
         <div className="test-cards-container">
@@ -38,6 +34,10 @@ function TestHome() {
             <TestCard key={uuidv4()} image={type.image_url} title={type.type} />
           ))}
         </div>
+      </div>
+      <h2>Previous Tests</h2>
+      <div className="previous-tests-container">
+        <PreviousTests />
       </div>
     </div>
   );
