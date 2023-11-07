@@ -1,0 +1,36 @@
+.result-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .result-card-body {
+    color: #333333;
+  }
+  
+  .result-card-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .result-item {
+    margin-bottom: 10px;
+  }
+  
+  .result-item-title {
+    font-weight: bold;
+  }
+  
+  .result-item-text {
+    font-weight: bold;
+  }
+  
+  .good-result {
+    color: green;
+  }
+  
+  .bad-result {
+    color: red;
+  }

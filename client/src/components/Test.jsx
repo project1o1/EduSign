@@ -5,7 +5,7 @@ import ResultCard from "./ResultCard";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-
+import "../styles/TestComponent.css";
 const api = "http://localhost:3000";
 const test_questions_number = 5;
 function Test(props) {
@@ -75,26 +75,20 @@ function Test(props) {
     return testQuestions;
   };
   return (
-    <div>
-      {!isTestCompleted && (
-        <div>
-          {renderTestQuestions()}
-        </div>
+    <div className="test-container">
+      {!isTestCompleted && <div className="test-questions-container">{renderTestQuestions()}</div>}
+      {isTestCompleted && (
+        <button
+          className="submit-button"
+          onClick={() => {
+            setIsTestCompleted(true);
+            saveTestResults();
+          }}
+        >
+          Submit
+        </button>
       )}
-      {isTestCompleted && <button
-            onClick={() => {
-              // console.log(testResults)
-              setIsTestCompleted(true);
-              saveTestResults();
-            }}
-          >
-            Submit
-          </button>}
-      {isSubmitted && (
-        <div>
-          <ResultCard testResults={testResults} difficulty={difficulty} />
-        </div>
-      )}
+      {isSubmitted && <ResultCard testResults={testResults} difficulty={difficulty} />}
     </div>
   );
 }

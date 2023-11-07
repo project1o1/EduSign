@@ -1,0 +1,68 @@
+/* TestPage.css */
+.test-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .instructions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .instructions-container h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333333;
+  }
+  
+  .instructions-container button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .webcam-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .test-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .test-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333333;
+  }
+  
+  .webcam {
+    height: 500px;
+    width: 500px;
+    /* Add more styling as needed */
+  }
+  
+
+
+  .test-page-main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  

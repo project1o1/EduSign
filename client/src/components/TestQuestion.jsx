@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 // import "../styles/LearnPage.css";
+import "../styles/TestComponent.css";
 
 const SERVER_URL = "http://localhost:8000"; // Replace with your server URL
 function TestQuestion(props) {
@@ -90,11 +91,11 @@ function TestQuestion(props) {
       {isVisible && (
         <div className="learn-page-container">
           <div className="learn-header">
-            <h2>{type}</h2>
+            <h3>Test Type : {type}</h3>
+            <h3>Test Word : {name}</h3>
           </div>
           <div className="content-container">
             <div className="image-container">
-              <h2>{name}</h2>
             </div>
             {/* <div className="webcam-container">
               <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />

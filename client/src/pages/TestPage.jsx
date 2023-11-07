@@ -3,7 +3,8 @@ import { useState, useRef, useEffect } from "react";
 import Instructions from "../components/Instructions";
 import Test from "../components/Test";
 import Webcam from "react-webcam";
-import LoadingScreen from "../components/LoadingScreen"; // Import the LoadingScreen component
+import LoadingScreen from "../components/LoadingScreen";
+import "../styles/TestPage.css";
 
 function TestPage() {
   const { type } = useParams();
@@ -11,50 +12,50 @@ function TestPage() {
   const [difficulty, setDifficulty] = useState(0);
   const webcamRef = useRef(null);
   const [isTestCompleted, setIsTestCompleted] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Simulate loading for a few seconds (you can replace this with your actual data loading)
   useEffect(() => {
     setTimeout(() => {
-      setIsLoading(false); // Set loading to false after a delay
+      setIsLoading(false);
     }, 2000);
   }, []);
 
   if (isLoading) {
-    return <LoadingScreen />; // Display loading screen while loading
+    return <LoadingScreen />;
   }
 
   return (
-    <div>
-      <div>
-        {!isReadyForTest && (
+    <div className="test-page-container">
+      <div className="instructions-container">
+        {!isReadyForTest ? (
           <Instructions
             setIsReadyForTest={setIsReadyForTest}
             setDifficulty={setDifficulty}
           />
-        )}
-        {isReadyForTest && (
-          <div>
-            {!isTestCompleted && (
-              <div>
-                <h1>Test</h1>
-                <div className="webcam-container">
-                  <Webcam
-                    style={{ height: "500px", width: "500px" }}
-                    audio={false}
-                    ref={webcamRef}
-                    screenshotFormat="image/jpeg"
-                  />
+        ) : (
+          <div className="test-page-main">
+            <div className="test-container">
+              {!isTestCompleted && (
+                <div>
+                  <h1>Test</h1>
+                  <div className="webcam-container">
+                    <Webcam
+                      className="webcam"
+                      audio={false}
+                      ref={webcamRef}
+                      screenshotFormat="image/jpeg"
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
-            <Test
-              type={type}
-              webcamRef={webcamRef}
-              difficulty={difficulty}
-              isTestCompleted={isTestCompleted}
-              setIsTestCompleted={setIsTestCompleted}
-            />
+              )}
+              <Test
+                type={type}
+                webcamRef={webcamRef}
+                difficulty={difficulty}
+                isTestCompleted={isTestCompleted}
+                setIsTestCompleted={setIsTestCompleted}
+              />
+            </div>
           </div>
         )}
       </div>
