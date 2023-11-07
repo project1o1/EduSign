@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/About.css";
-import GitHubIcon from "../../public/github-mark-white.svg";
+import GitHubIcon from "/src/images/github-mark-white.svg";
 
 const About = () => {
   const [repoDetails, setRepoDetails] = useState(null);
