@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import "../styles/LearnPage.css";
+// import "../styles/LearnPage.css";
 
 const SERVER_URL = "http://20.207.70.108:8000"; // Replace with your server URL
 function TestQuestion(props) {

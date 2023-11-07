@@ -1,10 +1,10 @@
-import React,{useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useUser } from '@clerk/clerk-react';
-import CircularProgressBar from '../components/CircularProgressBar';
-import CommitGraph from '../components/CommitGraph';
-
-const api = 'http://localhost:3000';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
+import CircularProgressBar from "../components/CircularProgressBar";
+import CommitGraph from "../components/CommitGraph";
+import DifficultyAccuracyBarChart from "../components/DifficultyAccuracyBarChart";
+const api = "http://localhost:3000";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -22,7 +22,6 @@ const Home = () => {
           setTestStats(data);
         });
 
-
       fetch(`${api}/stats/learn/${user.username}`)
         .then((res) => res.json())
         .then((data) => {
@@ -30,7 +29,7 @@ const Home = () => {
           setLearnStats(data);
         });
 
-        fetch(`${api}/types`)
+      fetch(`${api}/types`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -40,50 +39,60 @@ const Home = () => {
 
     if (user) {
       setUserDetails(user);
-      fetchStats(); 
+      fetchStats();
     }
   }, [user]);
-  
-  // totalSigns = [{"type":"Letter","image_url":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1c6t_VgoGJaOLGnHQNGTfArk7-86u9tNnOA","count":26},{"type":"Word","image_url":"https://img.freepik.com/premium-vector/hello-bye-lettering_12196-1135.jpg","count":10}]
 
   const getTotalCount = (type) => {
     if (!totalSigns) return 0;
     return totalSigns.find((sign) => sign.type === type).count;
-  }
+  };
 
   const LearnStats = () => {
     if (!learnStats) return <div></div>;
     return (
       <div>
-        <h2>Learn Stats</h2>
-        <div>
+        <h2 style={{ color: "#212529" }}>Learning Stats</h2>
+        <div style={{ display: "flex", justifyContent: "flex-start" }}>
           {Object.keys(learnStats.typeCount).map((type) => (
-            <div>
             <CircularProgressBar
               key={type}
               label={type}
-              percentage={Math.round((learnStats.typeCount[type] / getTotalCount(type) ) * 100)}
+              percentage={Math.round(
+                (learnStats.typeCount[type] / getTotalCount(type)) * 100
+              )}
             />
-            </div>
           ))}
         </div>
-      </div>    
+      </div>
+    );
+  };
+
+  const TestStats = () => {
+    return (
+      <div>
+          <h2 style={{ color: "#212529" }}>Test Results</h2>
+          <div style={{display:"flex",justifyContent:"space-evenly"}}>
+            <div style={{ display: "flex", justifyContent: "flex-start" }}>
+              <CommitGraph commitDates={testStats?.dates} />
+            </div>
+            {testStats &&  <div style={{ display: "flex", justifyContent: "flex-start" }}>
+              <DifficultyAccuracyBarChart data={testStats} />
+            </div>}
+          </div>
+        </div>
     );
   }
 
   return (
-    <div>
-      <h1>Your Stats</h1>
+    <div style={{ padding: "2rem" }}>
+      <h1 style={{ color: "#212529" }}>Hello, {user.username}!</h1>
       <div>
         {LearnStats()}
-        <div>
-          <h2>Test Stats</h2>
-          <CommitGraph commitDates={testStats?.dates} />
-        </div>
+        {TestStats()}
       </div>
     </div>
   );
 };
 
 export default Home;
-
