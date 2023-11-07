@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import PreviousTestCard from "./PreviousTestCard";
 
 function PreviousTests() {
   const [previousTests, setPreviousTests] = useState(null);
@@ -28,23 +29,7 @@ function PreviousTests() {
       .slice(0, 5)
       .map((date) => {
         ptc.push(
-          <div className="previous-test" key={uuidv4()}>
-            <h3>{date}</h3>
-            <div className="previous-test-stats">
-              <div className="previous-test-stat">
-                <h4>Tests</h4>
-                <p>{previousTests.dateStats[date].tests}</p>
-              </div>
-              <div className="previous-test-stat">
-                <h4>Accuracy</h4>
-                <p>{previousTests.dateStats[date].accuracy}%</p>
-              </div>
-              <div className="previous-test-stat">
-                <h4>Type</h4>
-                <p>{previousTests.dateStats[date].type}</p>
-              </div>
-            </div>
-          </div>
+          <PreviousTestCard date={date} previousTest={previousTests.dateStats[date]} key={uuidv4()} />
         );
       });
     return ptc;
