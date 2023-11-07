@@ -3,14 +3,14 @@
 import numpy as np
 import tensorflow as tf
 
-
+# models_path = 'model/keypoint_classifier/'
 class KeyPointClassifier(object):
     def __init__(
         self,
-        model_path='model/keypoint_classifier/keypoint_classifier4.tflite',
-        num_threads=1,
+        model,
+        num_threads=2,
     ):
-        self.interpreter = tf.lite.Interpreter(model_path=model_path,
+        self.interpreter = tf.lite.Interpreter(model_path=model,
                                                num_threads=num_threads)
 
         self.interpreter.allocate_tensors()

@@ -7,6 +7,7 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 const api = "http://localhost:3000";
+const test_questions_number = 5;
 function Test(props) {
   const difficulty = props.difficulty;
   const [testData, setTestData] = useState([]);
@@ -21,7 +22,7 @@ function Test(props) {
   // const webcamRef = props.webcamRef;
 
   useEffect(() => {
-    fetch(api + "/test/" + props.type + "/" + 5)
+    fetch(api + "/test/" + props.type + "/" + test_questions_number)
       .then((res) => res.json())
       .then((data) => {
         setTestData(data);
@@ -67,6 +68,7 @@ function Test(props) {
           webcamRef={props.webcamRef}
           setTestResults={setTestResults}
           setIsTestCompleted={setIsTestCompleted}
+          // type = {type}
         />
       );
     }

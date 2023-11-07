@@ -4,16 +4,18 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 // import "../styles/LearnPage.css";
 
-const SERVER_URL = "http://20.207.70.108:8000"; // Replace with your server URL
+const SERVER_URL = "http://localhost:8000"; // Replace with your server URL
 function TestQuestion(props) {
   const name = props.name;
   const isVisible = props.isVisible;
   const id = props.id;
+  // const type = props.type;
   // const isVisibles = props.isVisibles;
   const setIsVisibles = props.setIsVisibles;
   const { type } = useParams();
   const webcamRef = props.webcamRef; // Use the provided webcamRef prop
   const [isRecording, setIsRecording] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
   const mainSetTestResults = props.setTestResults;
   const [thisLevelCompleted, setThisLevelCompleted] = useState(false);
@@ -37,8 +39,10 @@ function TestQuestion(props) {
         const formData = new FormData();
         formData.append("video", blob);
 
+        setIsProcessing(true); // Set isProcessing to true when API call is made
+
         axios
-          .post(`${SERVER_URL}/video?name=${name}&id=${id}`, formData)
+          .post(`${SERVER_URL}/video?name=${name}&id=${id}&type=${type}`, formData)
           .then((response) => {
             // setTestResult(response.data.percentage);
             mainSetTestResults((prevTestResults) => {
@@ -47,6 +51,7 @@ function TestQuestion(props) {
             });
             console.log(response.data.percentage)
             setIsResponseReceived(true);
+            setIsProcessing(false); // Set isProcessing to false when response is received
           })
           .catch((error) => {
             setError("Error sending the video to the server. Please try again."+error);
@@ -97,8 +102,8 @@ function TestQuestion(props) {
           </div>
           {error && <p className="error-message">{error}</p>}
           <div className="button-container">
-            <button onClick={startRecording} disabled={isRecording} className="capture-button">
-              {thisLevelCompleted ? "Retry" : isRecording ? "Recording..." : "Start Recording"}
+            <button onClick={startRecording} disabled={isRecording || isProcessing} className="capture-button">
+              {thisLevelCompleted && isResponseReceived ? "Retake" : isRecording ? "Recording..." : isProcessing ? "Processing..." : "Start Recording"}
             </button>
             {thisLevelCompleted && isResponseReceived && <button onClick={onNext} className="capture-button">
               Next
@@ -119,6 +124,7 @@ TestQuestion.propTypes = {
   webcamRef: PropTypes.object.isRequired,
   setTestResults: PropTypes.func.isRequired,
   setIsTestCompleted: PropTypes.func.isRequired,
+  // type: PropTypes.string.isRequired,
 };
 
 export default TestQuestion;

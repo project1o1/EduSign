@@ -6,8 +6,13 @@ import cv2
 import tempfile
 import shutil
 import json
+import os
 
 from predict import Predict
+
+# types = ['Word', 'Letter']
+# models = ['keypoint_classifier4.tflite', 'keypoint_classifier4.tflite']
+models_path = 'model/keypoint_classifier/models'
 app = Flask(__name__)
 
 # Initialize CORS with the app
@@ -22,13 +27,13 @@ def upload_frame():
     try:
         data = request.get_json()
         base64img = data["frameData"]
-        # type = data["type"]
+        type_category = data["type"]
         # id = data["id"]
         base64img = base64img.replace("data:image/jpeg;base64,", "")
         binary_image_data = base64.b64decode(base64img)
         nparr = np.frombuffer(binary_image_data, np.uint8)
         image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-        label_name = pred.get_hand_gesture_label(image)
+        label_name = preds[types.index(type_category)].get_hand_gesture_label(image)
         # print(label_name)
 
         return jsonify({"message": "Frame received and processed successfully", "label": label_name})
@@ -45,13 +50,13 @@ def upload_video():
 
         video_capture = cv2.VideoCapture(video_file.name)
         labels = []
-
+        type_category = request.args.get("type")
         while True:
             ret, frame = video_capture.read()
             if not ret:
                 break
 
-            label_name = pred.get_hand_gesture_label(frame)
+            label_name = preds[types.index(type_category)].get_hand_gesture_label(frame)
             if(label_name != ""):
                 labels.append(label_name)
 
@@ -66,5 +71,10 @@ def upload_video():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    pred = Predict()
-    app.run(debug=True, host='0.0.0.0', port=8000)
+    try:
+        types = [i for i in os.listdir(models_path) if os.path.isdir(f'{models_path}/{i}')]
+        models = [f'{models_path}/{t}/keypoint_classifier.tflite' for t in types]
+        preds = [Predict(i) for i in models]
+        app.run(debug=True, host='0.0.0.0', port=8000)
+    except Exception as e:
+        print(str(e))

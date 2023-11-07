@@ -76,7 +76,7 @@ def pre_process_landmark(landmark_list):
 
 
 class Predict:
-    def __init__(self):
+    def __init__(self, model):
         args = get_args()
 
         self.use_static_image_mode = args.use_static_image_mode
@@ -92,7 +92,7 @@ class Predict:
             min_tracking_confidence=self.min_tracking_confidence,
         )
 
-        self.keypoint_classifier = KeyPointClassifier()
+        self.keypoint_classifier = KeyPointClassifier(model=model)
 
         with open('model/keypoint_classifier/keypoint_classifier_label.csv', encoding='utf-8-sig') as f:
             self.keypoint_classifier_labels = csv.reader(f)
