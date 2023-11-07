@@ -1,23 +1,25 @@
-import PropTypes from 'prop-types'; 
-import { useNavigate } from 'react-router-dom';
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import "../styles/Test.css";
 
 function TestCard(props) {
-    const navigate = useNavigate();
-    function handleClick() {
-        navigate("/test/"+props.title);
-    }
+  const navigate = useNavigate();
+
+  function handleClick() {
+    navigate("/test/" + props.title);
+  }
+
   return (
-    <div className="card" onClick={handleClick}>
+    <div className="test-card" onClick={handleClick}>
       <img src={props.image} alt={props.title} />
       <h2>{props.title}</h2>
     </div>
   );
 }
 
-// Props validation
 TestCard.propTypes = {
-    image: PropTypes.string.isRequired, 
-    title: PropTypes.string.isRequired,
-  };
+  image: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+};
 
 export default TestCard;
