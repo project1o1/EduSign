@@ -22,7 +22,7 @@ import variables from "../config/index";
 import "./App.css";
 import LoadingScreen from "./pages/Loading";
 
-const clerkPubKey = variables.REACT_APP_CLERK_PUBLISHABLE_KEY;
+const clerkPubKey = "pk_test_bHVja3ktaGVuLTc0LmNsZXJrLmFjY291bnRzLmRldiQ";
 
 function App() {
   const navigate = useNavigate();
