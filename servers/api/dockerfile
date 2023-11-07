@@ -1,0 +1,8 @@
+FROM node:18.15.0
+ENV DATABASE_URL=libsql://legal-red-ghost-pavanmanishd.turso.io
+ENV TOKEN=eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOiIyMDIzLTExLTA0VDE0OjU1OjEwLjQzNDEyNzMwN1oiLCJpZCI6ImIxNWUxMGI1LTdiMjAtMTFlZS05MzZkLWY2NmVlZmQ0MzUwYyJ9.AeerdDJ33cd6p0ZbYT9Tmj5gj0wjrGmAeHxswPYpmFtXf_Bl_YJi3hDoMUVIxLu2G2NtnMkF--jvKWOa0aa_Bg
+WORKDIR /app
+COPY . /app
+RUN npm install
+EXPOSE 8000
+CMD ["node", "index.js"]
