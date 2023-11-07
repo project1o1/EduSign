@@ -39,7 +39,7 @@ const Navbar = () => {
         >
         <h1 style={{ fontSize: "2rem", cursor:"pointer" }} onClick={()=>{navigate('/')}}>EduSign</h1>
         <div style={{ display: "flex", alignItems: "center" , paddingRight:"2rem" }}>
-          <p style={{ paddingRight: "1rem" }}>Profile</p>
+          {/* <p style={{ paddingRight: "1rem" }}>Profile</p> */}
           <UserButton />
         </div>
       </div>
