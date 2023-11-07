@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useUser, UserButton } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { user } = useUser();
   const [username, setUsername] = useState("");
   useEffect(() => {
@@ -35,7 +37,7 @@ const Navbar = () => {
         zIndex: 2,
       }}
         >
-        <h1 style={{ fontSize: "2rem" }}>EduSign</h1>
+        <h1 style={{ fontSize: "2rem", cursor:"pointer" }} onClick={()=>{navigate('/')}}>EduSign</h1>
         <div style={{ display: "flex", alignItems: "center" , paddingRight:"2rem" }}>
           <p style={{ paddingRight: "1rem" }}>Profile</p>
           <UserButton />
