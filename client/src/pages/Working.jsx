@@ -1,4 +1,20 @@
+import { useState, useEffect } from "react";
+import LoadingScreen from "./Loading";
+
 const Working = () => {
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
+
+  useEffect(() => {
+    // Simulate loading for a few seconds (you can replace this with your actual data loading)
+    setTimeout(() => {
+      setIsLoading(false); // Set loading to false after a delay
+    }, 2000);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen />; // Display loading screen while loading
+  }
+
   const sectionStyle = {
     flex: 1,
     display: "flex",

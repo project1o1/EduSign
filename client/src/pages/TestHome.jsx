@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import TestCard from "../components/TestCard";
 import PreviousTests from "../components/PreviousTests";
+import LoadingScreen from "./Loading";
 import { v4 as uuidv4 } from "uuid";
 import "../styles/Test.css";
 
@@ -8,14 +9,21 @@ const api = "http://localhost:3000";
 
 function TestHome() {
   const [types, setTypes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // State to track loading
 
   useEffect(() => {
     fetch(api + "/types")
       .then((res) => res.json())
       .then((data) => {
         setTypes(data);
+        setIsLoading(false); // Set loading to false when data is fetched
       });
   }, []);
+
+  // Conditional rendering of loading screen
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="test-home-container">

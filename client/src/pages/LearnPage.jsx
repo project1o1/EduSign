@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import "../styles/LearnPage.css";
+import LoadingScreen from "./Loading"; // Import the LoadingScreen component
 const SERVER_URL = "http://localhost:8000";
 const api = "http://localhost:3000";
 
@@ -18,6 +19,8 @@ const LearnPage = () => {
   const [counter, setCounter] = useState(5);
   const { user } = useUser();
   const [imageUrl, setImageUrl] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Track loading state
+
   useEffect(() => {
     let timer;
     if (isSending) {
@@ -38,10 +41,12 @@ const LearnPage = () => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(`${api}/signs/${type}/${id}`);
-        console.log(response.data.image_url); 
+        console.log(response.data.image_url);
         setImageUrl(response.data.image_url);
+        setIsLoading(false); // Mark loading as complete
       } catch (error) {
         console.log(error);
+        setIsLoading(false); // Mark loading as complete even in case of an error
       }
     };
     fetchImage();
@@ -140,52 +145,59 @@ const LearnPage = () => {
         <h2>Lesson: {id}</h2>
       </div>
 
-      <div className="content-container">
-        <div className="media-container">
-          <div className="image-container">
-            {imageUrl && <img
-              src={imageUrl}
-              alt="Placeholder"
-              className="placeholder-image"
-            />}
+      {isLoading ? ( // Display loading screen while image URL is being fetched
+        <LoadingScreen />
+      ) : (
+        <>
+          <div className="content-container">
+            <div className="media-container">
+              <div className="image-container">
+                {imageUrl && (
+                  <img
+                    src={imageUrl}
+                    alt="Placeholder"
+                    className="placeholder-image"
+                  />
+                )}
+              </div>
+              <div className="webcam-container">
+                <Webcam
+                  audio={false}
+                  ref={webcamRef}
+                  screenshotFormat="image/jpeg"
+                />
+              </div>
+            </div>
           </div>
-          <div className="webcam-container">
-            <Webcam
-              audio={false}
-              ref={webcamRef}
-              screenshotFormat="image/jpeg"
-            />
+          <div className="instruction-container">
+            <ul>
+              <li className="instruction-text">
+                Please position yourself properly in front of the webcam and mimic
+                the sign corresponding to the displayed word. Click the "Start"
+                button to capture and send the frames to the server for validation.
+              </li>
+              <li className="instruction-text">
+                Make sure the sign is clear and well-captured to ensure accurate
+                validation results.
+              </li>
+            </ul>
           </div>
-        </div>
-      </div>
-      <div className="instruction-container">
-        <ul>
-          <li className="instruction-text">
-            Please position yourself properly in front of the webcam and mimic
-            the sign corresponding to the displayed word. Click the "Start"
-            button to capture and send the frames to the server for validation.
-          </li>
-          <li className="instruction-text">
-            Make sure the sign is clear and well-captured to ensure accurate
-            validation results.
-          </li>
-        </ul>
-      </div>
-      {error && <p className="error-message">{error}</p>}
-      {isProcessing && <p>Processing...</p>}
-      {isSending && <p>{counter}</p>}
-      {percentage !== null && <p>Progress: {percentage}%</p>}
-      <div className="button-container">
-        <button
-          onClick={captureVideo}
-          disabled={isSending || isProcessing}
-          className="capture-button"
-        >
-          {isSending ? "Sending..." : startOrRelearnButton()}
-        </button>
-        {nextLessonButton}
-      </div>
-      
+          {error && <p className="error-message">{error}</p>}
+          {isProcessing && <p>Processing...</p>}
+          {isSending && <p>{counter}</p>}
+          {percentage !== null && <p>Progress: {percentage}%</p>}
+          <div className="button-container">
+            <button
+              onClick={captureVideo}
+              disabled={isSending || isProcessing}
+              className="capture-button"
+            >
+              {isSending ? "Sending..." : startOrRelearnButton()}
+            </button>
+            {nextLessonButton}
+          </div>
+        </>
+      )}
     </div>
   );
 };

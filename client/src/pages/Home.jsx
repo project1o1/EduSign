@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import CircularProgressBar from "../components/CircularProgressBar";
 import CommitGraph from "../components/CommitGraph";
@@ -9,7 +8,6 @@ import LoadingScreen from "./Loading";
 const api = "http://localhost:3000";
 
 const Home = () => {
-  const navigate = useNavigate();
   const { user } = useUser();
   const [userDetails, setUserDetails] = useState(null);
   const [testStats, setTestStats] = useState(null);
