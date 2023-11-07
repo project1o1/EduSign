@@ -1,0 +1,12 @@
+pip
+wheel
+numpy
+pandas
+opencv-contrib-python
+opencv-python
+Flask
+Flask-Cors
+mediapipe
+protobuf
+tensorflow
+tflite
