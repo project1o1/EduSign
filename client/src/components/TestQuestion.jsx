@@ -55,7 +55,7 @@ function TestQuestion(props) {
             setIsProcessing(false); // Set isProcessing to false when response is received
           })
           .catch((error) => {
-            setError("Error sending the video to the server. Please try again."+error);
+            setError("Error sending the video to the server. Please try again.");
           });
       };
 
