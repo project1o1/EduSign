@@ -193,7 +193,7 @@ app.get('/stats/learn/:username', async (req, res) => {
 }
 );
 const port = 8080;
-const httpsPort = 8000; // Choose a port for HTTPS
+const httpsPort = 8443; // Choose a port for HTTPS
 
 const privateKey = fs.readFileSync('./ssl_keys/myserver.key', 'utf8'); // Replace with the path to your private key
 const certificate = fs.readFileSync('./ssl_keys/myserver.crt', 'utf8'); // Replace with the path to your SSL certificate

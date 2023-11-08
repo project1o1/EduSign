@@ -30,3 +30,5 @@ servers/model/model/__pycache__
 
 servers/model/ssl_keys
 servers/api/ssl_keys
+
+servers/model/node_modules

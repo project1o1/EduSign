@@ -51,6 +51,7 @@ def upload_video():
         video_capture = cv2.VideoCapture(video_file.name)
         labels = []
         type_category = request.args.get("type")
+        print(type_category)
         while True:
             ret, frame = video_capture.read()
             if not ret:
@@ -76,6 +77,6 @@ if __name__ == "__main__":
         types = [i for i in os.listdir(models_path) if os.path.isdir(f'{models_path}/{i}')]
         models = [f'{models_path}/{t}/keypoint_classifier.tflite' for t in types]
         preds = [Predict(i) for i in models]
-        app.run(debug=True, host='0.0.0.0', port=8000, ssl_context=("./ssl_keys/flask.crt", "./ssl_keys/flask.key"))
+        app.run(debug=True, host='0.0.0.0', port=10000)
     except Exception as e:
         print(str(e))
