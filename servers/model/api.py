@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS  # Import the CORS extension
+from flask_cors import CORS
 import base64
 import numpy as np
 import cv2
@@ -70,11 +70,12 @@ def upload_video():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 if __name__ == "__main__":
     try:
         types = [i for i in os.listdir(models_path) if os.path.isdir(f'{models_path}/{i}')]
         models = [f'{models_path}/{t}/keypoint_classifier.tflite' for t in types]
         preds = [Predict(i) for i in models]
-        app.run(debug=True, host='0.0.0.0', port=8000)
+        app.run(debug=True, host='0.0.0.0', port=8000, ssl_context=("./ssl_keys/flask.crt", "./ssl_keys/flask.key"))
     except Exception as e:
         print(str(e))

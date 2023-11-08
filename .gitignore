@@ -27,3 +27,6 @@ servers/api/.env
 servers/model/__pycache__
 servers/model/utils/__pycache__
 servers/model/model/__pycache__
+
+servers/model/ssl_keys
+servers/api/ssl_keys

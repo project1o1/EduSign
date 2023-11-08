@@ -1,4 +1,6 @@
 import express from "express";
+import https from "https";
+import fs from "fs"; // Node.js file system module
 import { createClient } from "@libsql/client";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -190,7 +192,19 @@ app.get('/stats/learn/:username', async (req, res) => {
     res.json({typeCount, typeStats});
 }
 );
+const port = 8080;
+const httpsPort = 8000; // Choose a port for HTTPS
 
-app.listen(8000, () => {
-    console.log('Server started on port 3000');
+const privateKey = fs.readFileSync('./ssl_keys/myserver.key', 'utf8'); // Replace with the path to your private key
+const certificate = fs.readFileSync('./ssl_keys/myserver.crt', 'utf8'); // Replace with the path to your SSL certificate
+const credentials = { key: privateKey, cert: certificate };
+
+const httpsServer = https.createServer(credentials, app);
+
+httpsServer.listen(httpsPort, () => {
+    console.log('HTTPS server started on port ' + httpsPort);
+});
+
+app.listen(port, () => {
+    console.log('HTTP server started on port ' + port);
 });

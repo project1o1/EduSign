@@ -18,6 +18,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose port 8000 (if your application listens on this port)
 EXPOSE 8000
+EXPOSE 8443
 
 # Run your application
 CMD ["python", "api.py"]
