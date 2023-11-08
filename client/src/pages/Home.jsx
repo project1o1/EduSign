@@ -4,8 +4,8 @@ import CircularProgressBar from "../components/CircularProgressBar";
 import CommitGraph from "../components/CommitGraph";
 import DifficultyAccuracyBarChart from "../components/DifficultyAccuracyBarChart";
 import LoadingScreen from "./Loading";
-
-const api = "http://localhost:3000";
+import variables from "../config";
+const api = variables.API_URL;
 
 const Home = () => {
   const { user } = useUser();

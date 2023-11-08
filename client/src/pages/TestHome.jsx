@@ -4,8 +4,9 @@ import PreviousTests from "../components/PreviousTests";
 import LoadingScreen from "./Loading";
 import { v4 as uuidv4 } from "uuid";
 import "../styles/Test.css";
+import variables from "../config";
 
-const api = "http://localhost:3000";
+const api = variables.API_URL;
 
 function TestHome() {
   const [types, setTypes] = useState([]);

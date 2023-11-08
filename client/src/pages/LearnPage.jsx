@@ -5,8 +5,9 @@ import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import "../styles/LearnPage.css";
 import LoadingScreen from "./Loading"; // Import the LoadingScreen component
-const SERVER_URL = "http://localhost:8000";
-const api = "http://localhost:3000";
+import variables from "../config";
+const SERVER_URL = variables.MODEL_URL;
+const api = variables.API_URL;
 
 const LearnPage = () => {
   const { type, id } = useParams();
